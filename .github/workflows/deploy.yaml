@@ -1,0 +1,35 @@
+name: Dash on Heroku - Inventory Management Dashboard
+run-name: ${{ github.actor }} - ${{name}}  # use 'name' variable
+
+on:
+  push:
+    branches:
+      - main  # run deploy script on pushes to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
+        with:
+          python-version: 3.9 
+
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Log in to Heroku
+        run: heroku login -i
+
+      - name: Deploy to Heroku
+        run: |
+          heroku create  # Create a new Heroku app
+          git push heroku main
+        env:
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}  # Store your Heroku API key in GitHub secrets
+
