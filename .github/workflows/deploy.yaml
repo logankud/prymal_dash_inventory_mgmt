@@ -1,5 +1,5 @@
-name: Dash on Heroku - Inventory Management Dashboard
-run-name: ${{ github.actor }} - ${{name}}  # use 'name' variable
+name: &workflow_name Dash on Heroku - Inventory Management Dashboard
+run-name: ${{ github.actor }} - *workflow_name  # use 'name' variable
 
 on:
   push:
