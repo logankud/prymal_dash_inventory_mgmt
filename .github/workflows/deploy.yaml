@@ -24,12 +24,15 @@ jobs:
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
       - name: Log in to Heroku
-        run: heroku login -i
+        run: heroku login -i --username=${{secrets.HEROKU_USERNAME}} --password=${{secrets.HEROKU_PASSWORD}}
+        env:
+          HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
+          HEROKU_PASSWORD: ${{secrets.HEROKU_PASSWORD}}
 
       - name: Deploy to Heroku
         run: |
           heroku create  # Create a new Heroku app
           git push heroku main
         env:
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}  # Store your Heroku API key in GitHub secrets
-
+          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}  
+        
