@@ -20,25 +20,25 @@ jobs:
         with:
           python-version: 3.9 
 
-      - name: Install Heroku CLI
-        run: curl https://cli-assets.heroku.com/install.sh | sh
+      # - name: Install Heroku CLI
+      #   run: curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Log in to Heroku
-        run: heroku login -i 
-        ${{secrets.HEROKU_USERNAME}}
-        ${{secrets.HEROKU_PASSWORD}}
-        env:
-          HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
-          HEROKU_PASSWORD: ${{secrets.HEROKU_PASSWORD}}
+      # - name: Log in to Heroku
+      #   run: heroku login -i 
+      #   ${{secrets.HEROKU_USERNAME}}
+      #   ${{secrets.HEROKU_PASSWORD}}
+      #   env:
+      #     HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
+      #     HEROKU_PASSWORD: ${{secrets.HEROKU_PASSWORD}}
           
-      - name: Create Heroku App
-        run: |
-          heroku create prymal_inventory_management
-          git push heroku main
+      # - name: Create Heroku App
+      #   run: |
+      #     heroku create prymal_inventory_management
+      #     git push heroku main
 
       - name: Deploy to Heroku
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: prymal_inventory_management
+          heroku_app_name: prymal-inventory-management
           heroku_email: ${{secrets.HEROKU_USERNAME}}
