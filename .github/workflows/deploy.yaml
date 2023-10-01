@@ -24,15 +24,21 @@ jobs:
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
       - name: Log in to Heroku
-        run: heroku login -i --username=${{secrets.HEROKU_USERNAME}} --password=${{secrets.HEROKU_PASSWORD}}
+        run: heroku login -i 
+        ${{secrets.HEROKU_USERNAME}}
+        ${{secrets.HEROKU_PASSWORD}}
         env:
           HEROKU_USERNAME: ${{secrets.HEROKU_USERNAME}}
           HEROKU_PASSWORD: ${{secrets.HEROKU_PASSWORD}}
+          
+      - name: Create Heroku App
+        run: |
+          heroku create prymal_inventory_management
+          git push heroku main
 
       - name: Deploy to Heroku
-        run: |
-          heroku create  # Create a new Heroku app
-          git push heroku main
-        env:
-          HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}  
-        
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: prymal_inventory_management
+          heroku_email: ${{secrets.HEROKU_USERNAME}}
