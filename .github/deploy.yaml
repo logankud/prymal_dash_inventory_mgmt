@@ -1,0 +1,41 @@
+name: Prymal Dashboard - Inventory Management
+run-name: ${{ github.actor }} - ${{name}}  # use 'name' variable
+
+on:
+  push:
+    branches:
+      - main  # run deploy script on pushes to main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
+        with:
+          python-version: 3.8  # Replace with your Python version
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # Add any necessary dependencies
+        working-directory: ./  # Change to your app directory
+
+      - name: Build and deploy
+        run: |
+          python dashboard.py  # Replace with your app's entry point
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./docs  # Specify the directory to publish
+          publish_branch: gh-pages
+
+      - name: Cleanup
+        run: |
+          rm -rf docs
+        working-directory: ./  # Change to your app directory
